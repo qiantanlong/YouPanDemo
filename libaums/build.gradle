@@ -1,0 +1,62 @@
+apply plugin: 'com.android.library'
+apply plugin: 'jacoco-android'
+
+ext {
+    artifact = 'libaums'
+    bintrayName = 'libaums'
+    libraryVersion = '0.5.5'
+}
+
+
+configurations {
+    javadocDeps
+}
+
+android {
+    compileSdkVersion 26
+    buildToolsVersion "25.0.2"
+
+    defaultConfig {
+        minSdkVersion 16
+        targetSdkVersion 26
+        versionCode 1
+        versionName "1.0"
+    }
+    buildTypes {
+        release {
+            minifyEnabled false
+            proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
+        }
+
+        debug {
+            testCoverageEnabled true
+        }
+    }
+
+    lintOptions {
+        abortOnError false
+    }
+
+    // TODO remove this?
+    testOptions {
+        unitTests.returnDefaultValues = true
+    }
+
+    externalNativeBuild {
+        cmake {
+            path "CMakeLists.txt"
+        }
+    }
+}
+
+dependencies {
+    testCompile 'junit:junit:4.12'
+    testCompile 'org.apache.commons:commons-io:1.3.2'
+    testCompile 'com.eclipsesource.minimal-json:minimal-json:0.9.4'
+    testCompile 'org.xenei:junit-contracts:0.1.7'
+    testCompile 'org.mockito:mockito-core:2.7.22'
+
+    compile 'com.android.support:support-annotations:25.3.1'
+    javadocDeps 'com.android.support:support-annotations:25.3.1'
+}
+
